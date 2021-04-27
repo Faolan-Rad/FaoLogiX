@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using BaseX;
+using FrooxEngine;
+using FrooxEngine.LogiX;
+using FrooxEngine.UIX;
+
+
+namespace CollectionsX.Variables
+{
+	[Category(new string[] { "LogiX/Variables" , "LogiX/Collections" })]
+	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
+{
+	typeof(Slot),
+	typeof(User)
+})]
+	public class ValueArray<T> : LogixNode, IChangeable, IWorldElement
+	{
+		public readonly SyncArray<Collectionsobj<T>> Value;
+
+        public readonly Output<SyncArray<Collectionsobj<T>>> Val;
+
+		protected override void OnEvaluate()
+        {
+            this.Val.Value = Value;
+        }
+		protected override void OnGenerateVisual(Slot root)
+		{
+			UIBuilder uIBuilder;
+			uIBuilder = base.GenerateUI(root, 184f, 76f);
+			VerticalLayout verticalLayout;
+			verticalLayout = uIBuilder.VerticalLayout(4f);
+			verticalLayout.PaddingLeft.Value = 8f;
+			verticalLayout.PaddingRight.Value = 16f;
+			uIBuilder.Style.MinHeight = 32f;
+            LocaleString text;
+			text =  typeof(T).Name;
+			uIBuilder.Text(in text);
+		}
+		protected override void NotifyOutputsOfChange()
+		{
+			((IOutputElement)this.Val).NotifyChange();
+		}
+	}
+
+}
