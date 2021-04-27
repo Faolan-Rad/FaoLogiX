@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FrooxEngine;
 using FrooxEngine.LogiX;
 using FrooxEngine.UIX;
+using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
@@ -17,7 +18,7 @@ namespace CollectionsX.Array
 })]
 	public class ArrayRemoveAt<T> : LogixNode, IChangeable, IWorldElement
 	{
-        public readonly Input<SyncArray<Collectionsobj<T>>> List;
+        public readonly Input<ArrayX<T>> List;
 
         public readonly Input<T> AddedValue;
 
@@ -29,13 +30,11 @@ namespace CollectionsX.Array
 		[ImpulseTarget]
 		public void Remove()
 		{
-			SyncArray<Collectionsobj<T>> _listobj;
+			ArrayX<T> _listobj;
             _listobj = List.Evaluate();
 			if (_listobj != null)
 			{
-				int index = Index.Evaluate();
-				_listobj[index].Dispose();
-				_listobj.RemoveAt(index);
+				_listobj.RemoveAt(Index.Evaluate());
 				this.Removed.Trigger();
 			}
 		}

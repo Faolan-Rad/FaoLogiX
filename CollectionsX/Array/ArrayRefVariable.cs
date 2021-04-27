@@ -7,21 +7,21 @@ using BaseX;
 using FrooxEngine;
 using FrooxEngine.LogiX;
 using FrooxEngine.UIX;
+using CollectionsX.Objs;
 
 
 namespace CollectionsX.Variables
 {
 	[Category(new string[] { "LogiX/Variables" , "LogiX/Collections" })]
-	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
-{
+	[GenericTypes(new Type[]{
 	typeof(Slot),
 	typeof(User)
 })]
-	public class ValueArray<T> : LogixNode, IChangeable, IWorldElement
+	public class ArrayRefVariable<T> : LogixNode, IChangeable, IWorldElement where T : class, IWorldElement
 	{
-		public readonly SyncArray<Collectionsobj<T>> Value;
+		public readonly RefArrayX<T> Value;
 
-        public readonly Output<SyncArray<Collectionsobj<T>>> Val;
+        public readonly Output<ArrayX<T>> Val;
 
 		protected override void OnEvaluate()
         {

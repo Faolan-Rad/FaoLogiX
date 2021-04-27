@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FrooxEngine;
 using FrooxEngine.LogiX;
 using FrooxEngine.UIX;
+using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
@@ -17,7 +18,7 @@ namespace CollectionsX.Array
 })]
 	public class ArraySet<T> : LogixNode, IChangeable, IWorldElement
 	{
-        public readonly Input<SyncArray<Collectionsobj<T>>> List;
+        public readonly Input<ArrayX<T>> List;
 
 		public readonly Input<int> Index;
 
@@ -30,16 +31,13 @@ namespace CollectionsX.Array
 		[ImpulseTarget]
 		public void Add()
 		{
-			SyncArray<Collectionsobj<T>> _listobj;
+			ArrayX<T> _listobj;
             _listobj = List.Evaluate();
             if (_listobj != null)
             {
 				try
 				{
-					Collectionsobj<T> tempObj = new Collectionsobj<T>();
-					tempObj.Initialize(World, _listobj);
-					tempObj.Value.Value = Value.Evaluate();
-					_listobj.Write(tempObj, Index.Evaluate());
+					_listobj.Write(Value.Evaluate(), Index.Evaluate());
 					this.Set.Trigger();
 				}
 				catch 

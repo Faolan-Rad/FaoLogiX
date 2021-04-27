@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FrooxEngine;
 using FrooxEngine.LogiX;
 using FrooxEngine.UIX;
+using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
@@ -22,18 +23,18 @@ namespace CollectionsX.Array
 		public readonly Output<bool> NotFound;
 
 
-		public readonly Input<SyncArray<Collectionsobj<T>>> List;
+		public readonly Input<ArrayX<T>> List;
 
 		public readonly Input<int> Index;
 		protected override void OnEvaluate()
 		{
-			SyncArray<Collectionsobj<T>> _listobj;
+			ArrayX<T> _listobj;
             _listobj = List.Evaluate();
             if (_listobj != null)
             {
 				try
 				{
-                    this.Value.Value = _listobj[Index.Evaluate()].Value.Value;
+                    this.Value.Value = _listobj[Index.Evaluate()];
 					NotFound.Value = false;
 					NotifyOutputsOfChange();
 				}

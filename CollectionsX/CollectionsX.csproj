@@ -55,12 +55,17 @@
     <Compile Include="Array\ArrayRemoveAt.cs" />
     <Compile Include="Array\ArrayCount.cs" />
     <Compile Include="Array\ArrayInsert.cs" />
-    <Compile Include="Collectionsobj.cs" />
+    <Compile Include="Array\ArrayRefVariable.cs" />
+    <Compile Include="Collectionsobjs.cs" />
     <Compile Include="Array\ArraySet.cs" />
     <Compile Include="Array\ArrayRead.cs" />
     <Compile Include="Array\ArrayAdd.cs" />
+    <Compile Include="ICollectionsObj.cs" />
+    <Compile Include="Objs\RefArrayX.cs" />
+    <Compile Include="Objs\ValueArrayX.cs" />
+    <Compile Include="Objs\ArrayX.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Array\Arrayvariable.cs" />
+    <Compile Include="Array\ArrayValueVariable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

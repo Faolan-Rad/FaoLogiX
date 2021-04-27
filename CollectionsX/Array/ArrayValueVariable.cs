@@ -3,39 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BaseX;
 using FrooxEngine;
 using FrooxEngine.LogiX;
 using FrooxEngine.UIX;
 using CollectionsX.Objs;
-namespace CollectionsX.Array
+
+namespace CollectionsX.Variables
 {
-	[Category(new string[] { "LogiX/Collections/Array" })]
+	[Category(new string[] { "LogiX/Variables" , "LogiX/Collections" })]
 	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
 {
 	typeof(Slot),
 	typeof(User)
 })]
-	public class ArrayAdd<T> : LogixNode, IChangeable, IWorldElement
+	public class ArrayValueVariable<T> : LogixNode, IChangeable, IWorldElement
 	{
-        public readonly Output<int> Index;
+		public readonly ValueArrayX<T> Value;
 
-        public readonly Input<ArrayX<T>> List;
+        public readonly Output<ArrayX<T>> Val;
 
-		public readonly Input<T> AddedValue;
-
-		public readonly Impulse Added;
-
-		[ImpulseTarget]
-		public void Add()
-		{
-			ArrayX<T> _listobj;
-            _listobj = List.Evaluate();
-			if (_listobj != null)
-			{
-				this.Index.Value = _listobj.Add(AddedValue.Evaluate());
-				this.Added.Trigger();
-			}
-		}
+		protected override void OnEvaluate()
+        {
+            this.Val.Value = Value;
+        }
 		protected override void OnGenerateVisual(Slot root)
 		{
 			UIBuilder uIBuilder;
@@ -45,12 +36,13 @@ namespace CollectionsX.Array
 			verticalLayout.PaddingLeft.Value = 8f;
 			verticalLayout.PaddingRight.Value = 16f;
 			uIBuilder.Style.MinHeight = 32f;
-			LocaleString text;
-			text = typeof(T).Name;
+            LocaleString text;
+			text =  typeof(T).Name;
 			uIBuilder.Text(in text);
 		}
 		protected override void NotifyOutputsOfChange()
 		{
+			((IOutputElement)this.Val).NotifyChange();
 		}
 	}
 
