@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrooxEngine;
+using BaseX;
 namespace CollectionsX
 {
     public class CollectionsItemValue<T> : SyncObject, IEquatable<CollectionsItemValue<T>>,ICollectionsObj<T>

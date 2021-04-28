@@ -49,8 +49,14 @@ namespace CollectionsX.Objs
         }
         public void Append(T value = default(T))
         {
-            Array.Add(MakeObj(value));
-            DataWritten(this, Count - 1, 1);
+            base.World.RunSynchronously(delegate
+            {
+                Array.Add(MakeObj(value));
+                if (base.LocalUser == base.World.HostUser)
+                {
+                    DataWritten(this, Count - 1, 1);
+                }
+            });
         }
 
         public int Add(T value = default(T))
@@ -60,34 +66,60 @@ namespace CollectionsX.Objs
         }
         public void RemoveAt(int index)
         {
-            Array[index].Dispose();
-            Array.RemoveAt(index);
-            DataShortened(this, index, 1);
+            base.World.RunSynchronously(delegate
+            {
+                Save.Remove(Array[index]);
+                Array.RemoveAt(index);
+                if (base.LocalUser == base.World.HostUser)
+                {
+                    DataShortened(this, index, 1);
+                }
+            });
         }
 
         public void Remove(int index, int count)
         {
-            for (int i = 0; i < count; i++)
+            base.World.RunSynchronously(delegate
             {
-                Array[index + i].Dispose();
-                Array.RemoveAt(i);
-            }
-            DataShortened(this, index, count);
+                for (int i = 0; i < count; i++)
+                {
+                    Array[index + i].Dispose();
+                    Array.RemoveAt(i);
+                }
+
+                if (base.LocalUser == base.World.HostUser)
+                {
+                    DataShortened(this, index, count);
+                }
+            });
         }
 
 
         public void Write(T value, int index)
         {
-            Array[index].Value.Target = value;
-            DataWritten(this, index, 1);
+            base.World.RunSynchronously(delegate
+            {
+                Array[index].Value.Target = value;
+                DataWritten(this, index, 1);
+                if (base.LocalUser == base.World.HostUser)
+                {
+                    DataWritten(this, index, 1);
+                }
+            });
         }
 
         public void Insert(T value, int index)
         {
-            Array.Insert(index, MakeObj(value));
-            DataInsert(this, index, 1);
+            base.World.RunSynchronously(delegate
+            {
+                Array.Insert(index, MakeObj(value));
+                DataInsert(this, index, 1);
+                if (base.LocalUser == base.World.HostUser)
+                {
+                    DataInsert(this, index, 1);
+                }
+            });
         }
-
 
         public int IndexOf(T value = default(T))
         {

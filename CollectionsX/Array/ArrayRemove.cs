@@ -20,8 +20,6 @@ namespace CollectionsX.Array
 	{
         public readonly Input<ArrayX<T>> List;
 
-        public readonly Input<T> AddedValue;
-
 		public readonly Input<int> Index;
 
 		public readonly Input<int> Count;

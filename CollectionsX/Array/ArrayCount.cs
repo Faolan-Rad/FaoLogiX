@@ -10,28 +10,45 @@ using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
+	[NodeName("Array Length")]
 	[Category(new string[] { "LogiX/Collections/Array" })]
-	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
-{
-	typeof(Slot),
-	typeof(User)
-})]
 	public class ArrayCount<T> : LogixNode, IChangeable, IWorldElement 
 	{
         public readonly Output<int> Count;
 
-        public readonly Input<ArrayX<T>> List;
+        public readonly Input<ArrayX<T>> A;
 
-		protected override void OnEvaluate()
-		{
-			ArrayX<T> _listobj;
-            _listobj = List.Evaluate();
+        protected override void OnEvaluate()
+        {
+            ArrayX<T> _listobj;
+            _listobj = A.Evaluate();
             if (_listobj != null)
             {
-					this.Count.Value = _listobj.Count;
-					NotifyOutputsOfChange();
+                this.Count.Value = _listobj.Count;
+                NotifyOutputsOfChange();
+            }
+        }
+
+		protected override Type FindOverload(NodeTypes connectingTypes)
+		{
+			if (this.A.IsConnected)
+			{
+				return null;
 			}
+			Type overload;
+			overload = LogixHelper.GetMatchingOverload(this.GetOverloadName(), connectingTypes);
+			if (overload != null)
+			{
+				return overload;
+			}
+			if (connectingTypes.inputs.TryGetValue("A", out var type))
+			{
+				return typeof(ArrayCount<>).MakeGenericType(type);
+			}
+			return null;
 		}
+
+
 		protected override void OnGenerateVisual(Slot root)
 		{
 			UIBuilder uIBuilder;

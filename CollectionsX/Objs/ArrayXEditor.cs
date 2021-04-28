@@ -27,14 +27,24 @@ namespace CollectionsX.Objs
         }
         protected override void OnChanges()
         {
-            if (base.World.IsAuthority && this._targetArray.Target != null && !this.setup)
+            if (!this.setup && this._targetArray.Target != null)
             {
-                this.setup = true;
-                base.Slot.DestroyChildren();
-                this._targetArray.Target.DataWritten += ArrayLengthChange;
-                this._targetArray.Target.DataInsert += DataInsert;
-                this._targetArray.Target.DataShortened += ArrayXDataChange;
-                this.Target_ElementsAdded(this._targetArray.Target, 0, this._targetArray.Target.Count);
+                if (base.World.IsAuthority)
+                {
+                    this.setup = true;
+                    base.Slot.DestroyChildren();
+                    this._targetArray.Target.DataWritten += ArrayLengthChange;
+                    this._targetArray.Target.DataInsert += DataInsert;
+                    this._targetArray.Target.DataShortened += ArrayXDataChange;
+                    this.Target_ElementsAdded(this._targetArray.Target, 0, this._targetArray.Target.Count);
+                }
+                else
+                {
+                    this.setup = true;
+                    this._targetArray.Target.DataWritten += ArrayLengthChange;
+                    this._targetArray.Target.DataInsert += DataInsert;
+                    this._targetArray.Target.DataShortened += ArrayXDataChange;
+                }
             }
         }
 
