@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrooxEngine;
+using FrooxEngine.LogiX;
 
 namespace FaoLogiX.GlobalFunctionsX
 {
-    public class ReturnNode
+    [NodeName("Return")]
+    [Category(new string[] { "LogiX/" })]
+    public class ReturnNode: LogixNode, IChangeable, IWorldElement
     {
     }
 }

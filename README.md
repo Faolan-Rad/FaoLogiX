@@ -1,5 +1,5 @@
 # FaoLogiX
-This is a repo for Faolans logiX NeosVR plugin witch adds much needed things to LogiX
+This is a repo for Faolans logiX NeosVR plugin which adds much needed things to LogiX
 
 ## Features
 *CollectionsX

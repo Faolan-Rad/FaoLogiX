@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FaoLogiX.GlobalFunctionsX
 {
-    public interface GlobalFunctionsCallBack
+    public interface IGlobalFunctionsCallBack
     {
         void CallBack(object[] ReturnData);
     }
