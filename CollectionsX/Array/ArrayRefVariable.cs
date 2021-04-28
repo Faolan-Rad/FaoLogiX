@@ -12,6 +12,7 @@ using CollectionsX.Objs;
 
 namespace CollectionsX.Variables
 {
+	[NodeName("Array Reference Variable")]
 	[Category(new string[] { "LogiX/Variables" , "LogiX/Collections" })]
 	[GenericTypes(new Type[]{
 	typeof(Slot),

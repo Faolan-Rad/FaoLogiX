@@ -10,12 +10,9 @@ using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
+	[NodeName("Array Read")]
 	[Category(new string[] { "LogiX/Collections/Array" })]
-	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
-{
-	typeof(Slot),
-	typeof(User)
-})]
+
 	public class ArrayRead<T> : LogixNode, IChangeable, IWorldElement
 	{
         public readonly Output<T> Value;
@@ -26,25 +23,45 @@ namespace CollectionsX.Array
 		public readonly Input<ArrayX<T>> List;
 
 		public readonly Input<int> Index;
-		protected override void OnEvaluate()
-		{
-			ArrayX<T> _listobj;
+        protected override void OnEvaluate()
+        {
+            ArrayX<T> _listobj;
             _listobj = List.Evaluate();
             if (_listobj != null)
             {
-				try
-				{
+                try
+                {
                     this.Value.Value = _listobj[Index.Evaluate()];
-					NotFound.Value = false;
-					NotifyOutputsOfChange();
-				}
-				catch 
-				{
+                    NotFound.Value = false;
+                    NotifyOutputsOfChange();
+                }
+                catch
+                {
                     NotFound.Value = true;
-					NotifyOutputsOfChange();
-				}
+                    NotifyOutputsOfChange();
+                }
+            }
+        }
+
+		protected override Type FindOverload(NodeTypes connectingTypes)
+		{
+			if (this.List.IsConnected)
+			{
+				return null;
 			}
+			Type overload;
+			overload = LogixHelper.GetMatchingOverload(this.GetOverloadName(), connectingTypes);
+			if (overload != null)
+			{
+				return overload;
+			}
+			if (connectingTypes.inputs.TryGetValue("List", out var type))
+			{
+				return typeof(ArrayRead<>).MakeGenericType(type.GetGenericArguments()[0]);
+			}
+			return null;
 		}
+
 		protected override void OnGenerateVisual(Slot root)
 		{
 			UIBuilder uIBuilder;

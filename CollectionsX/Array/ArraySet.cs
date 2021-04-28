@@ -10,12 +10,9 @@ using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
+	[NodeName("Array Set")]
 	[Category(new string[] { "LogiX/Collections/Array" })]
-	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
-{
-	typeof(Slot),
-	typeof(User)
-})]
+
 	public class ArraySet<T> : LogixNode, IChangeable, IWorldElement
 	{
         public readonly Input<ArrayX<T>> List;
@@ -26,7 +23,26 @@ namespace CollectionsX.Array
 
 		public readonly Impulse Set;
 
-		public readonly Impulse Fail;
+        public readonly Impulse Fail;
+
+		protected override Type FindOverload(NodeTypes connectingTypes)
+		{
+			if (this.List.IsConnected)
+			{
+				return null;
+			}
+			Type overload;
+			overload = LogixHelper.GetMatchingOverload(this.GetOverloadName(), connectingTypes);
+			if (overload != null)
+			{
+				return overload;
+			}
+			if (connectingTypes.inputs.TryGetValue("List", out var type))
+			{
+				return typeof(ArraySet<>).MakeGenericType(type.GetGenericArguments()[0]);
+			}
+			return null;
+		}
 
 		[ImpulseTarget]
 		public void Add()

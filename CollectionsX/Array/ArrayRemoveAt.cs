@@ -10,12 +10,9 @@ using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
+	[NodeName("Array Remove At")]
 	[Category(new string[] { "LogiX/Collections/Array" })]
-	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
-{
-	typeof(Slot),
-	typeof(User)
-})]
+
 	public class ArrayRemoveAt<T> : LogixNode, IChangeable, IWorldElement
 	{
         public readonly Input<ArrayX<T>> List;
@@ -26,6 +23,26 @@ namespace CollectionsX.Array
 
 
 		public readonly Impulse Removed;
+
+		protected override Type FindOverload(NodeTypes connectingTypes)
+		{
+			if (this.List.IsConnected)
+			{
+				return null;
+			}
+			Type overload;
+			overload = LogixHelper.GetMatchingOverload(this.GetOverloadName(), connectingTypes);
+			if (overload != null)
+			{
+				return overload;
+			}
+			if (connectingTypes.inputs.TryGetValue("List", out var type))
+			{
+				return typeof(ArrayRemoveAt<>).MakeGenericType(type.GetGenericArguments()[0]);
+			}
+			return null;
+		}
+
 
 		[ImpulseTarget]
 		public void Remove()

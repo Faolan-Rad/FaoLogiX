@@ -10,12 +10,9 @@ using CollectionsX.Objs;
 
 namespace CollectionsX.Array
 {
+	[NodeName("Array Remove")]
 	[Category(new string[] { "LogiX/Collections/Array" })]
-	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
-{
-	typeof(Slot),
-	typeof(User)
-})]
+
 	public class ArrayRemove<T> : LogixNode, IChangeable, IWorldElement
 	{
         public readonly Input<ArrayX<T>> List;
@@ -27,17 +24,37 @@ namespace CollectionsX.Array
 
 		public readonly Impulse Removed;
 
-		[ImpulseTarget]
-		public void Remove()
-		{
-			ArrayX<T> _listobj;
+        [ImpulseTarget]
+        public void Remove()
+        {
+            ArrayX<T> _listobj;
             _listobj = List.Evaluate();
-			if (_listobj != null)
+            if (_listobj != null)
+            {
+                _listobj.Remove(Index.Evaluate(), Count.Evaluate());
+                this.Removed.Trigger();
+            }
+        }
+
+		protected override Type FindOverload(NodeTypes connectingTypes)
+		{
+			if (this.List.IsConnected)
 			{
-				_listobj.Remove(Index.Evaluate(), Count.Evaluate());
-				this.Removed.Trigger();
+				return null;
 			}
+			Type overload;
+			overload = LogixHelper.GetMatchingOverload(this.GetOverloadName(), connectingTypes);
+			if (overload != null)
+			{
+				return overload;
+			}
+			if (connectingTypes.inputs.TryGetValue("List", out var type))
+			{
+				return typeof(ArrayRemove<>).MakeGenericType(type.GetGenericArguments()[0]);
+			}
+			return null;
 		}
+
 		protected override void OnGenerateVisual(Slot root)
 		{
 			UIBuilder uIBuilder;

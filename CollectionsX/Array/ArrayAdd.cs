@@ -9,12 +9,8 @@ using FrooxEngine.UIX;
 using CollectionsX.Objs;
 namespace CollectionsX.Array
 {
+	[NodeName("Array Add")]
 	[Category(new string[] { "LogiX/Collections/Array" })]
-	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
-{
-	typeof(Slot),
-	typeof(User)
-})]
 	public class ArrayAdd<T> : LogixNode, IChangeable, IWorldElement
 	{
         public readonly Output<int> Index;
@@ -25,16 +21,35 @@ namespace CollectionsX.Array
 
 		public readonly Impulse Added;
 
-		[ImpulseTarget]
-		public void Add()
-		{
-			ArrayX<T> _listobj;
+        [ImpulseTarget]
+        public void Add()
+        {
+            ArrayX<T> _listobj;
             _listobj = List.Evaluate();
-			if (_listobj != null)
+            if (_listobj != null)
+            {
+                this.Index.Value = _listobj.Add(AddedValue.Evaluate());
+                this.Added.Trigger();
+            }
+        }
+
+		protected override Type FindOverload(NodeTypes connectingTypes)
+		{
+			if (this.List.IsConnected)
 			{
-				this.Index.Value = _listobj.Add(AddedValue.Evaluate());
-				this.Added.Trigger();
+				return null;
 			}
+			Type overload;
+			overload = LogixHelper.GetMatchingOverload(this.GetOverloadName(), connectingTypes);
+			if (overload != null)
+			{
+				return overload;
+			}
+			if (connectingTypes.inputs.TryGetValue("List", out var type))
+			{
+				return typeof(ArrayAdd<>).MakeGenericType(type.GetGenericArguments()[0]);
+			}
+			return null;
 		}
 		protected override void OnGenerateVisual(Slot root)
 		{

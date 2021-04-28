@@ -43,7 +43,7 @@ namespace CollectionsX.Array
 			}
 			if (connectingTypes.inputs.TryGetValue("A", out var type))
 			{
-				return typeof(ArrayCount<>).MakeGenericType(type);
+				return typeof(ArrayCount<>).MakeGenericType(type.GetGenericArguments()[0]);
 			}
 			return null;
 		}

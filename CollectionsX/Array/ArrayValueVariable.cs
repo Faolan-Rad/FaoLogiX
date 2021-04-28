@@ -11,6 +11,7 @@ using CollectionsX.Objs;
 
 namespace CollectionsX.Variables
 {
+	[NodeName("Array Value Variable")]
 	[Category(new string[] { "LogiX/Variables" , "LogiX/Collections" })]
 	[GenericTypes(GenericTypes.Group.NeosPrimitives, new Type[]
 {
