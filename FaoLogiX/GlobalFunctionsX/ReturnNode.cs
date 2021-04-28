@@ -9,7 +9,7 @@ using FrooxEngine.LogiX;
 namespace FaoLogiX.GlobalFunctionsX
 {
     [NodeName("Return")]
-    [Category(new string[] { "LogiX/" })]
+    [Category(new string[] { "LogiX/Flow" })]
     public class ReturnNode: LogixNode, IChangeable, IWorldElement
     {
     }

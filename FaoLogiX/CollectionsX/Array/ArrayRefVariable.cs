@@ -18,16 +18,30 @@ namespace CollectionsX.Variables
 	typeof(Slot),
 	typeof(User)
 })]
-	public class ArrayRefVariable<T> : LogixNode, IChangeable, IWorldElement where T : class, IWorldElement
+	public class ArrayRefVariable<T> : LogixOperator<ArrayX<T>>, IValue<ArrayX<T>>, IChangeable, IWorldElement where T : class, IWorldElement
 	{
 		public readonly RefArrayX<T> Value;
 
-        public readonly Output<ArrayX<T>> Val;
+		public override ArrayX<T> Content => this.Value;
+		ArrayX<T> IValue<ArrayX<T>>.Value
+		{
+			get
+			{
+				return this.Value;
+			}
+			set
+			{
+				if (value != null)
+				{
+					this.Value.Copy(value);
+				}
+				else
+				{
+					this.Value.Clear();
+				}
+			}
+		}
 
-		protected override void OnEvaluate()
-        {
-            this.Val.Value = Value;
-        }
 		protected override void OnGenerateVisual(Slot root)
 		{
 			UIBuilder uIBuilder;
@@ -43,7 +57,7 @@ namespace CollectionsX.Variables
 		}
 		protected override void NotifyOutputsOfChange()
 		{
-			((IOutputElement)this.Val).NotifyChange();
+			((IOutputElement)this).NotifyChange();
 		}
 	}
 

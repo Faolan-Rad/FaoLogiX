@@ -19,6 +19,10 @@ namespace CollectionsX.Objs
 
         event ArrayXDataChange<T> DataInsert;
 
+        void Clear();
+
+        IEnumerator<T> GetEnumerator();
+        void Copy(ArrayX<T> source);
         string ToString();
         ICollectionsObj<T> GetObj(int index);
         T this[int index] { get;  }

@@ -8,7 +8,7 @@ using FrooxEngine;
 namespace FaoLogiX.GlobalFunctionsX
 {
     [NodeName("Call Global Function")]
-    [Category(new string[] { "LogiX" })]
+    [Category(new string[] { "LogiX/Flow" })]
     public class GlobalFunctionCallNode: LogixNode, IChangeable, IWorldElement, IGlobalFunctionsCallBack
     {
 		public void CallBack(object[] ReturnData)

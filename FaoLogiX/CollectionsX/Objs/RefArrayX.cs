@@ -23,6 +23,14 @@ namespace CollectionsX.Objs
 
         public event ArrayXLengthChange<T> DataShortened;
 
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return this[i];
+            }
+        }
+
         public string ToString()
         {
             return "a";
@@ -52,15 +60,28 @@ namespace CollectionsX.Objs
                 Write(value, index);
             }
         }
+
+        public void Clear()
+        {
+            base.World.RunSynchronously(delegate
+            {
+                int count = Count;
+                for (int i = 0; i < count; i++)
+                {
+                    Array[0].Dispose();
+                    Array.RemoveAt(0);
+                }
+                DataShortened(this, 0, count);
+            });
+        }
+
         public void Append(T value = default(T))
         {
             base.World.RunSynchronously(delegate
             {
                 Array.Add(MakeObj(value));
-                if (base.LocalUser == base.World.HostUser)
-                {
-                    DataWritten(this, Count - 1, 1);
-                }
+                DataWritten(this, Count - 1, 1);
+
             });
         }
 
@@ -75,10 +96,8 @@ namespace CollectionsX.Objs
             {
                 Save.Remove(Array[index]);
                 Array.RemoveAt(index);
-                if (base.LocalUser == base.World.HostUser)
-                {
-                    DataShortened(this, index, 1);
-                }
+                DataShortened(this, index, 1);
+
             });
         }
 
@@ -92,10 +111,7 @@ namespace CollectionsX.Objs
                     Array.RemoveAt(i);
                 }
 
-                if (base.LocalUser == base.World.HostUser)
-                {
-                    DataShortened(this, index, count);
-                }
+                DataShortened(this, index, count);
             });
         }
 
@@ -106,10 +122,6 @@ namespace CollectionsX.Objs
             {
                 Array[index].Value.Target = value;
                 DataWritten(this, index, 1);
-                if (base.LocalUser == base.World.HostUser)
-                {
-                    DataWritten(this, index, 1);
-                }
             });
         }
 
@@ -119,19 +131,19 @@ namespace CollectionsX.Objs
             {
                 Array.Insert(index, MakeObj(value));
                 DataInsert(this, index, 1);
-                if (base.LocalUser == base.World.HostUser)
-                {
-                    DataInsert(this, index, 1);
-                }
             });
         }
 
         public int IndexOf(T value = default(T))
         {
-            CollectionsItemRef<T> TempObj = MakeObj(value);
-            int index = Array.IndexOf(TempObj);
-            TempObj.Dispose();
-            return index;
+            for (int i = 0; i < Count; i++)
+            {
+                if (Array[i].SameValue(value))
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
         public override bool Equals(object other)
         {
@@ -142,7 +154,17 @@ namespace CollectionsX.Objs
             return false;
         }
 
-
+        public void Copy(ArrayX<T> source)
+        {
+            base.World.RunSynchronously(delegate
+            {
+                Remove(-1, Count);
+                foreach (T a in source)
+                {
+                    Append(a);
+                }
+            });
+        }
 
         public bool Equals(ArrayX<T> other)
         {
@@ -156,6 +178,7 @@ namespace CollectionsX.Objs
             }
             return same;
         }
+
         public void BuildInspectorUI(UIBuilder ui)
         {
             ui.PushStyle();

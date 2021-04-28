@@ -9,6 +9,7 @@ namespace CollectionsX
     public interface ICollectionsObj<T>
     {
         void Set(T obj);
+        bool SameValue(T val);
         T Get();
 
     }

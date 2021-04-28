@@ -17,8 +17,14 @@ namespace CollectionsX
 
         public void Set(T obj)
         {
-           Value.Value = obj;
+            Value.Value = obj;
         }
+
+        public bool SameValue(T other)
+        {
+            return EqualityComparer<T>.Default.Equals(other, this.Value.Value);
+        }
+
         public override bool Equals(object other)
         {
             if (other is CollectionsItemValue<T>)
@@ -55,6 +61,11 @@ namespace CollectionsX
                 return this.Equals((CollectionsItemRef<T>)other);
             }
             return false;
+        }
+
+        public bool SameValue(T other)
+        {
+            return EqualityComparer<RefID>.Default.Equals(other.ReferenceID, this.Value.Value);
         }
 
         public bool Equals(CollectionsItemRef<T> other)
