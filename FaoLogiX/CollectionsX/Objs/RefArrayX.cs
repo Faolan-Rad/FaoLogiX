@@ -5,33 +5,37 @@ using System.Text;
 using System.Threading.Tasks;
 using FrooxEngine;
 using BaseX;
-using CollectionsX.Objs;
 using FrooxEngine.UIX;
+using CollectionsX.Objs;
 using CollectionsX.Delegates;
 
 namespace CollectionsX.Objs
 {
-    public class ValueArrayX<T> : SyncObject, ArrayX<T>
+    public class RefArrayX<T> : SyncObject, ArrayX<T> where T : class, IWorldElement
     {
-        private readonly SyncRefList<CollectionsItemValue<T>> Array;
+        private readonly SyncRefList<CollectionsItemRef<T>> Array;
 
-        private readonly SyncBag<CollectionsItemValue<T>> Save;
+        private readonly SyncBag<CollectionsItemRef<T>> Save;
 
         public event ArrayXDataChange<T> DataWritten;
 
-        public event ArrayXLengthChange<T> DataShortened;
-
         public event ArrayXDataChange<T> DataInsert;
 
+        public event ArrayXLengthChange<T> DataShortened;
+
+        public string ToString()
+        {
+            return "a";
+        }
 
         public ICollectionsObj<T> GetObj(int index)
         {
             return Array[index];
         }
 
-        private CollectionsItemValue<T> MakeObj(T val)
+        private CollectionsItemRef<T> MakeObj(T val)
         {
-            CollectionsItemValue<T> tempObj = Save.Add();
+            CollectionsItemRef<T> tempObj = Save.Add();
             tempObj.Set(val);
             return tempObj;
         }
@@ -70,7 +74,7 @@ namespace CollectionsX.Objs
             base.World.RunSynchronously(delegate
             {
                 Save.Remove(Array[index]);
-            Array.RemoveAt(index);
+                Array.RemoveAt(index);
                 if (base.LocalUser == base.World.HostUser)
                 {
                     DataShortened(this, index, 1);
@@ -83,11 +87,11 @@ namespace CollectionsX.Objs
             base.World.RunSynchronously(delegate
             {
                 for (int i = 0; i < count; i++)
-            {
-                Array[index + i].Dispose();
-                Array.RemoveAt(i);
-            }
-                
+                {
+                    Array[index + i].Dispose();
+                    Array.RemoveAt(i);
+                }
+
                 if (base.LocalUser == base.World.HostUser)
                 {
                     DataShortened(this, index, count);
@@ -100,7 +104,7 @@ namespace CollectionsX.Objs
         {
             base.World.RunSynchronously(delegate
             {
-                Array[index].Value.Value = value;
+                Array[index].Value.Target = value;
                 DataWritten(this, index, 1);
                 if (base.LocalUser == base.World.HostUser)
                 {
@@ -124,7 +128,7 @@ namespace CollectionsX.Objs
 
         public int IndexOf(T value = default(T))
         {
-            CollectionsItemValue<T> TempObj = MakeObj(value);
+            CollectionsItemRef<T> TempObj = MakeObj(value);
             int index = Array.IndexOf(TempObj);
             TempObj.Dispose();
             return index;
@@ -138,6 +142,8 @@ namespace CollectionsX.Objs
             return false;
         }
 
+
+
         public bool Equals(ArrayX<T> other)
         {
             bool same = other.Count == Count;
@@ -150,19 +156,18 @@ namespace CollectionsX.Objs
             }
             return same;
         }
-
         public void BuildInspectorUI(UIBuilder ui)
         {
             ui.PushStyle();
             ui.Style.MinHeight = -1f;
             ui.VerticalLayout(4f);
             ui.Style.MinHeight = 24f;
-            LocaleString text;
             ui.Style.MinHeight = -1f;
             ui.VerticalLayout(4f);
             ArrayXEditor<T> obj = ui.Root.AttachComponent<ArrayXEditor<T>>();
             ui.NestOut();
             ui.Style.MinHeight = 24f;
+            LocaleString text;
             text = "Add";
             Button addButton;
             addButton = ui.Button(in text);
@@ -171,4 +176,6 @@ namespace CollectionsX.Objs
             ui.PopStyle();
         }
     }
+
+
 }

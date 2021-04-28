@@ -19,7 +19,7 @@ namespace CollectionsX.Objs
 
         event ArrayXDataChange<T> DataInsert;
 
-
+        string ToString();
         ICollectionsObj<T> GetObj(int index);
         T this[int index] { get;  }
 

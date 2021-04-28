@@ -50,24 +50,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Array\ArrayIndexOf.cs" />
-    <Compile Include="Array\ArrayRemove.cs" />
-    <Compile Include="Array\ArrayRemoveAt.cs" />
-    <Compile Include="Array\ArrayCount.cs" />
-    <Compile Include="Array\ArrayInsert.cs" />
-    <Compile Include="Array\ArrayRefVariable.cs" />
-    <Compile Include="Collectionsobjs.cs" />
-    <Compile Include="Array\ArraySet.cs" />
-    <Compile Include="Array\ArrayRead.cs" />
-    <Compile Include="Array\ArrayAdd.cs" />
-    <Compile Include="Delegates\ArrayDel.cs" />
-    <Compile Include="ICollectionsObj.cs" />
-    <Compile Include="Objs\ArrayXEditor.cs" />
-    <Compile Include="Objs\RefArrayX.cs" />
-    <Compile Include="Objs\ValueArrayX.cs" />
-    <Compile Include="Objs\ArrayX.cs" />
+    <Compile Include="CollectionsX\Array\ArrayIndexOf.cs" />
+    <Compile Include="CollectionsX\Array\ArrayRemove.cs" />
+    <Compile Include="CollectionsX\Array\ArrayRemoveAt.cs" />
+    <Compile Include="CollectionsX\Array\ArrayCount.cs" />
+    <Compile Include="CollectionsX\Array\ArrayInsert.cs" />
+    <Compile Include="CollectionsX\Array\ArrayRefVariable.cs" />
+    <Compile Include="CollectionsX\Collectionsobjs.cs" />
+    <Compile Include="CollectionsX\Array\ArraySet.cs" />
+    <Compile Include="CollectionsX\Array\ArrayRead.cs" />
+    <Compile Include="CollectionsX\Array\ArrayAdd.cs" />
+    <Compile Include="CollectionsX\Delegates\ArrayDel.cs" />
+    <Compile Include="CollectionsX\ICollectionsObj.cs" />
+    <Compile Include="CollectionsX\Objs\ArrayXEditor.cs" />
+    <Compile Include="CollectionsX\Objs\RefArrayX.cs" />
+    <Compile Include="CollectionsX\Objs\ValueArrayX.cs" />
+    <Compile Include="CollectionsX\Objs\ArrayX.cs" />
+    <Compile Include="GlobalFunctionsX\Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Array\ArrayValueVariable.cs" />
+    <Compile Include="CollectionsX\Array\ArrayValueVariable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BetterAccessX\" />
+    <Folder Include="StandardImprovementsX\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
