@@ -60,7 +60,9 @@
     <Compile Include="Array\ArraySet.cs" />
     <Compile Include="Array\ArrayRead.cs" />
     <Compile Include="Array\ArrayAdd.cs" />
+    <Compile Include="Delegates\ArrayDel.cs" />
     <Compile Include="ICollectionsObj.cs" />
+    <Compile Include="Objs\ArrayXEditor.cs" />
     <Compile Include="Objs\RefArrayX.cs" />
     <Compile Include="Objs\ValueArrayX.cs" />
     <Compile Include="Objs\ArrayX.cs" />

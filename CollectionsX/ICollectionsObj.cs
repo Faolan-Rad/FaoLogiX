@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using FrooxEngine;
 namespace CollectionsX
 {
-    interface ICollectionsObj<T>
+    public interface ICollectionsObj<T>
     {
         void Set(T obj);
         T Get();

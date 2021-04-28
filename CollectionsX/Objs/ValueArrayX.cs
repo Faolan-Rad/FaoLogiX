@@ -4,19 +4,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrooxEngine;
+using BaseX;
 using CollectionsX.Objs;
+using FrooxEngine.UIX;
+using CollectionsX.Delegates;
 
 namespace CollectionsX.Objs
 {
-    public class ValueArrayX<T>: SyncObject, ArrayX<T>
+    public class ValueArrayX<T> : SyncObject, ArrayX<T>
     {
-        private readonly SyncArray<CollectionsItemValue<T>> Array;
+        private readonly SyncRefList<CollectionsItemValue<T>> Array;
+
+        private readonly SyncBag<CollectionsItemValue<T>> Save;
+
+        public event ArrayXDataChange<T> DataWritten;
+
+        public event ArrayXLengthChange<T> DataShortened;
+
+        public event ArrayXDataChange<T> DataInsert;
+
+
+        public ICollectionsObj<T> GetObj(int index)
+        {
+            return Array[index];
+        }
 
         private CollectionsItemValue<T> MakeObj(T val)
         {
-            CollectionsItemValue<T> tempObj;
-            tempObj = new CollectionsItemValue<T>();
-            tempObj.Initialize(World, this);
+            CollectionsItemValue<T> tempObj = Save.Add();
             tempObj.Set(val);
             return tempObj;
         }
@@ -35,7 +50,8 @@ namespace CollectionsX.Objs
         }
         public void Append(T value = default(T))
         {
-            Array.Append(MakeObj(value));
+            Array.Add(MakeObj(value));
+            DataWritten(this, Count - 1, 1);
         }
 
         public int Add(T value = default(T))
@@ -45,30 +61,33 @@ namespace CollectionsX.Objs
         }
         public void RemoveAt(int index)
         {
-            Array[index].Dispose();
+            Save.Remove(Array[index]);
             Array.RemoveAt(index);
+            DataShortened(this, index, 1);
         }
 
         public void Remove(int index, int count)
         {
             for (int i = 0; i < count; i++)
-            	{
-                    Array[index + i].Dispose();
-            	}
-            Array.Remove(index, count);
+            {
+                Array[index + i].Dispose();
+                Array.RemoveAt(i);
+            }
+            DataShortened(this, index, count);
         }
 
 
         public void Write(T value, int index)
         {
-            Array.Write(MakeObj(value), index);
+            Array[index].Value.Value = value;
+            DataWritten(this, index, 1);
         }
 
         public void Insert(T value, int index)
         {
-            Array.Insert(MakeObj(value), index);
+            Array.Insert(index, MakeObj(value));
+            DataInsert(this, index, 1);
         }
-
 
         public int IndexOf(T value = default(T))
         {
@@ -97,6 +116,26 @@ namespace CollectionsX.Objs
                 }
             }
             return same;
+        }
+
+        public void BuildInspectorUI(UIBuilder ui)
+        {
+            ui.PushStyle();
+            ui.Style.MinHeight = -1f;
+            ui.VerticalLayout(4f);
+            ui.Style.MinHeight = 24f;
+            LocaleString text;
+            ui.Style.MinHeight = -1f;
+            ui.VerticalLayout(4f);
+            ArrayXEditor<T> obj = ui.Root.AttachComponent<ArrayXEditor<T>>();
+            ui.NestOut();
+            ui.Style.MinHeight = 24f;
+            text = "Add";
+            Button addButton;
+            addButton = ui.Button(in text);
+            ui.NestOut();
+            obj.Setup(this, addButton);
+            ui.PopStyle();
         }
     }
 }
