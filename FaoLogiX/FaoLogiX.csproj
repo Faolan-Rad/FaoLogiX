@@ -7,8 +7,8 @@
     <ProjectGuid>{B28FB139-B1C6-4536-B336-9D796F5301E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CollectionsX</RootNamespace>
-    <AssemblyName>CollectionsX</AssemblyName>
+    <RootNamespace>FaoLogiX</RootNamespace>
+    <AssemblyName>FaoLogiX</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
