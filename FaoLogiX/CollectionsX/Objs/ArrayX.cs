@@ -21,6 +21,8 @@ namespace CollectionsX.Objs
 
         void Clear();
 
+        void AppendArray(ArrayX<T> source);
+
         IEnumerator<T> GetEnumerator();
         void Copy(ArrayX<T> source);
         string ToString();

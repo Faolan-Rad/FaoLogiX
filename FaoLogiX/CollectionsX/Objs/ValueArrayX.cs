@@ -30,6 +30,17 @@ namespace CollectionsX.Objs
             }
         }
 
+        public void AppendArray(ArrayX<T> source)
+        {
+            base.World.RunSynchronously(delegate
+            {
+                foreach (T a in source)
+                {
+                    Append(a);
+                }
+            });
+        }
+
         public void Clear()
         {
             base.World.RunSynchronously(delegate

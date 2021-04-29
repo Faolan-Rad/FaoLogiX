@@ -166,6 +166,17 @@ namespace CollectionsX.Objs
             });
         }
 
+        public void AppendArray(ArrayX<T> source)
+        {
+            base.World.RunSynchronously(delegate
+            {
+                foreach (T a in source)
+                {
+                    Append(a);
+                }
+            });
+        }
+
         public bool Equals(ArrayX<T> other)
         {
             bool same = other.Count == Count;

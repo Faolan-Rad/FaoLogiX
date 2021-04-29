@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionsX\Array\ArrayAppend.cs" />
     <Compile Include="CollectionsX\Array\ArrayForeach.cs" />
     <Compile Include="CollectionsX\Array\ArrayClear.cs" />
     <Compile Include="CollectionsX\Array\ArrayIndexOf.cs" />
