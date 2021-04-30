@@ -69,11 +69,10 @@
     <Compile Include="CollectionsX\Objs\RefArrayX.cs" />
     <Compile Include="CollectionsX\Objs\ValueArrayX.cs" />
     <Compile Include="CollectionsX\Objs\ArrayX.cs" />
-    <Compile Include="GlobalFunctionsX\GlobalFunction.cs" />
     <Compile Include="GlobalFunctionsX\GlobalFunctionCallNode.cs" />
     <Compile Include="GlobalFunctionsX\GlobalFunctionManager.cs" />
     <Compile Include="GlobalFunctionsX\GlobalFunctionNode.cs" />
-    <Compile Include="GlobalFunctionsX\GlobalFunctionsCallBack.cs" />
+    <Compile Include="GlobalFunctionsX\GlobalFunctionSelector.cs" />
     <Compile Include="GlobalFunctionsX\ReturnNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CollectionsX\Array\ArrayValueVariable.cs" />
