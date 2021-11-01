@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FaoLogiX</RootNamespace>
     <AssemblyName>FaoLogiX</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,13 +33,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BaseX">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\NeosVR\Neos_Data\Managed\BaseX.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\NeosVR\Neos_Data\Managed\BaseX.dll</HintPath>
     </Reference>
     <Reference Include="BusinessX">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\NeosVR\Neos_Data\Managed\BusinessX.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\NeosVR\Neos_Data\Managed\BusinessX.dll</HintPath>
     </Reference>
     <Reference Include="FrooxEngine">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\NeosVR\Neos_Data\Managed\FrooxEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\NeosVR\Neos_Data\Managed\FrooxEngine.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -50,6 +51,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BetterAccessX\ButtonClicker.cs" />
+    <Compile Include="BetterAccessX\RemoveCommpoent.cs" />
+    <Compile Include="BetterAccessX\GetChildRecursiveSlots.cs" />
+    <Compile Include="BetterAccessX\GetChildSlots.cs" />
+    <Compile Include="BetterAccessX\GetComponents.cs" />
+    <Compile Include="BetterAccessX\GetUsers.cs" />
+    <Compile Include="BetterAccessX\GetComponentsInChildren.cs" />
+    <Compile Include="BetterAccessX\DuplicateComponent.cs" />
+    <Compile Include="BetterAccessX\GetComponentInChildren.cs" />
+    <Compile Include="BetterAccessX\AddCommpoent.cs" />
+    <Compile Include="BetterAccessX\DynamicInterface.cs" />
     <Compile Include="CollectionsX\Array\ArrayAppend.cs" />
     <Compile Include="CollectionsX\Array\ArrayForeach.cs" />
     <Compile Include="CollectionsX\Array\ArrayClear.cs" />
@@ -59,6 +71,7 @@
     <Compile Include="CollectionsX\Array\ArrayCount.cs" />
     <Compile Include="CollectionsX\Array\ArrayInsert.cs" />
     <Compile Include="CollectionsX\Array\ArrayRefVariable.cs" />
+    <Compile Include="CollectionsX\Array\LocalArrayValueVariable.cs" />
     <Compile Include="CollectionsX\Collectionsobjs.cs" />
     <Compile Include="CollectionsX\Array\ArraySet.cs" />
     <Compile Include="CollectionsX\Array\ArrayRead.cs" />
@@ -78,7 +91,6 @@
     <Compile Include="CollectionsX\Array\ArrayValueVariable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BetterAccessX\" />
     <Folder Include="StandardImprovementsX\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

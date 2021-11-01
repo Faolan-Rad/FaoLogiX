@@ -52,7 +52,7 @@ namespace CollectionsX.Array
             {
 				try
 				{
-					_listobj.Insert(Value.Evaluate(), Index.Evaluate());
+					_listobj.Insert(Value.Evaluate(), Index.EvaluateRaw());
 					this.Set.Trigger();
 				}
 				catch 

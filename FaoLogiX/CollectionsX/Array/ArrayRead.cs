@@ -31,7 +31,7 @@ namespace CollectionsX.Array
             {
                 try
                 {
-                    this.Value.Value = _listobj[Index.Evaluate()];
+                    this.Value.Value = _listobj[Index.EvaluateRaw()];
                     NotFound.Value = false;
                     NotifyOutputsOfChange();
                 }

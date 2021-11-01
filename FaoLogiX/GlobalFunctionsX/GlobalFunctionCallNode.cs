@@ -23,6 +23,7 @@ namespace FaoLogiX.GlobalFunctionsX
         public readonly SyncList<Output<object>> Returns;
 
         public readonly SyncList<Input<object>> Input;
+
         public void intAddOutput()
         {
             this.Returns.Add();
