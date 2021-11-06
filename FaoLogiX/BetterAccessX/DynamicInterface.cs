@@ -9,6 +9,7 @@ using FrooxEngine.UIX;
 using CollectionsX.Objs;
 using System.Reflection;
 using BaseX;
+using System.Linq.Expressions;
 
 namespace FaoLogiX.BetterAccessX
 {
@@ -238,7 +239,6 @@ namespace FaoLogiX.BetterAccessX
 			});
 		}
 
-
 		protected override void OnAttach()
 		{
 			base.OnAttach();
@@ -254,7 +254,14 @@ namespace FaoLogiX.BetterAccessX
 
 		protected override void OnInputChange()
 		{
-			_value = inData.EvaluateRaw();
+            if (inData.IsConnected)
+            {
+				_value = inData.EvaluateRaw();
+            }
+            else
+            {
+				_value = (T)typeof(T).GetDefaultValue();
+			}
 			int index = 0;
 			var info = from l in typeof(T).GetFields(BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Public)
 					   where l.FieldType.IsPrimitive || l.FieldType == typeof(string) || l.FieldType == typeof(Uri) || l.FieldType == typeof(Type) || l.FieldType == typeof(decimal) || l.FieldType == typeof(RefID)
@@ -262,12 +269,13 @@ namespace FaoLogiX.BetterAccessX
 			foreach (var item in info)
 			{
 				var putput = Inputs[index];
-                if (((IInputElement)putput.Element).IsConnected)
-                {
-					MethodInfo method = putput.ElementType.GetMethod("Evaluate");
-					item.SetValue(_value, method.Invoke(putput.Element, new object[1] { item.FieldType.GetDefaultValue() }));
+				if (putput != null) {
+					if (((IInputElement)putput.Element).IsConnected)
+					{
+						MethodInfo method = putput.ElementType.GetMethod("EvaluateRaw", item.FieldType.GenericTypeArguments);
+						item.SetValue(_value, method.Invoke(putput.Element, new object[1] { item.FieldType.GetDefaultValue() }));
+					}
 				}
-				
 				index++;
 			}
 			outData.Value = _value;
@@ -275,14 +283,14 @@ namespace FaoLogiX.BetterAccessX
 
 		protected override Type FindOverload(NodeTypes connectingTypes)
 		{
-			if (connectingTypes.inputs.TryGetValue("data", out var value))
+			if (connectingTypes.inputs.TryGetValue("inData", out var value))
 			{
 				if (!value.IsValueType)
 				{
 					return null;
 				}
 				var newslot = Slot.Parent.AddSlot("ValueGrab");
-				newslot.AttachComponent(typeof(DeStructor<>).MakeGenericType(value));
+				newslot.AttachComponent(typeof(ConStructor<>).MakeGenericType(value));
 				newslot.AttachComponent<Grabbable>();
 				newslot.CopyTransform(Slot);
 				Slot heldSlotReference = newslot;
