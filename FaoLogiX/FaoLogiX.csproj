@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BetterAccessX\ButtonClicker.cs" />
-    <Compile Include="BetterAccessX\ObjectCaster.cs" />
     <Compile Include="BetterAccessX\RemoveCommpoent.cs" />
     <Compile Include="BetterAccessX\GetChildRecursiveSlots.cs" />
     <Compile Include="BetterAccessX\GetChildSlots.cs" />

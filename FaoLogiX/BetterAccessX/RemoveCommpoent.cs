@@ -10,7 +10,7 @@ using CollectionsX.Objs;
 
 namespace FaoLogiX.BetterAccessX
 {
-	[NodeName("Add Component")]
+	[NodeName("Remove Component")]
 	[Category(new string[] { "LogiX/Components"})]
 	public class RemoveCommpoent : LogixNode, IChangeable, IWorldElement
 	{
