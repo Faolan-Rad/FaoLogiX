@@ -12,8 +12,8 @@ namespace FaoLogiX.BetterAccessX
 {
 	[NodeName("Add Component")]
 	[Category(new string[] { "LogiX/Components" ,"AbcFastGrab"})]
-	[NodeDefaultType(typeof(AddCompoent<Spinner>))]
-	public class AddCompoent<T> : LogixNode, IChangeable, IWorldElement where T:Component ,new()
+	[NodeDefaultType(typeof(AddComponent<Spinner>))]
+	public class AddComponent<T> : LogixNode, IChangeable, IWorldElement where T:Component ,new()
 	{
 		public readonly Input<Slot> slot;
 
