@@ -16,11 +16,11 @@ namespace CollectionsX.Array
 	{
         public readonly Output<int> Count;
 
-        public readonly Input<ArrayX<T>> A;
+        public readonly Input<IList<T>> A;
 
         protected override void OnEvaluate()
         {
-            ArrayX<T> _listobj;
+			IList<T> _listobj;
             _listobj = A.Evaluate();
             if (_listobj != null)
             {

@@ -47,13 +47,13 @@ namespace CollectionsX.Array
 		[ImpulseTarget]
 		public void Add()
 		{
-			ArrayX<T> _listobj;
+			IList<T> _listobj;
             _listobj = List.Evaluate();
             if (_listobj != null)
             {
 				try
 				{
-					_listobj.Write(Value.Evaluate(), Index.Evaluate());
+					_listobj[Index.Evaluate()] = Value.Evaluate();
 					this.Set.Trigger();
 				}
 				catch 

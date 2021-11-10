@@ -52,7 +52,7 @@ namespace FaoLogiX.BetterAccessX
 			Value.Clear();
 			foreach (var item in t)
             {
-				Value.Add(item);
+				Value.XAdd(item);
             }
 			Loaded.Trigger();
 		}

@@ -18,12 +18,12 @@ namespace CollectionsX.Array
 
         public readonly Output<bool> NotFound;
 
-		public readonly Input<ArrayX<T>> List;
+		public readonly Input<IList<T>> List;
 
 		public readonly Input<T> Value;
         protected override void OnEvaluate()
         {
-            ArrayX<T> _listobj;
+			IList<T> _listobj;
             _listobj = List.Evaluate();
             if (_listobj != null)
             {

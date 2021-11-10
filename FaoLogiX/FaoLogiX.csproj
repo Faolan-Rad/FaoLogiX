@@ -52,7 +52,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnsafeX\AddCommpoent - Copy.cs" />
+    <Compile Include="CollectionsX\Array\ArrayAdd.cs" />
+    <Compile Include="NeosArrayFixX\BoundElement.cs" />
+    <Compile Include="NeosArrayFixX\Hooker.cs" />
+    <Compile Include="NeosArrayFixX\ReflectiveEnumerator.cs" />
+    <Compile Include="UnsafeX\FuncCall.cs" />
     <Compile Include="BetterAccessX\BetterReferenceTarget.cs" />
     <Compile Include="BetterAccessX\BetterWriteRefLatch.cs" />
     <Compile Include="BetterAccessX\BetterWriteReferenceNode.cs" />
@@ -83,7 +87,7 @@
     <Compile Include="CollectionsX\Collectionsobjs.cs" />
     <Compile Include="CollectionsX\Array\ArraySet.cs" />
     <Compile Include="CollectionsX\Array\ArrayRead.cs" />
-    <Compile Include="CollectionsX\Array\ArrayAdd.cs" />
+    <Compile Include="CollectionsX\Array\ArrayXAdd.cs" />
     <Compile Include="CollectionsX\Delegates\ArrayDel.cs" />
     <Compile Include="CollectionsX\ICollectionsObj.cs" />
     <Compile Include="CollectionsX\Objs\ArrayXEditor.cs" />

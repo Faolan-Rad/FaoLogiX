@@ -9,23 +9,27 @@ using FrooxEngine.UIX;
 using CollectionsX.Objs;
 namespace CollectionsX.Array
 {
-	[NodeName("Array Clear")]
+	[NodeName("Array XAdd")]
 	[Category(new string[] { "LogiX/Collections/Array" })]
-	public class ArrayClear<T> : LogixNode, IChangeable, IWorldElement
+	public class ArrayXAdd<T> : LogixNode, IChangeable, IWorldElement
 	{
-        public readonly Input<IList<T>> List;
+		public readonly Output<int> index;
 
-		public readonly Impulse Cleared;
+        public readonly Input<ArrayX<T>> List;
+
+		public readonly Input<T> AddedValue;
+
+		public readonly Impulse Added;
 
         [ImpulseTarget]
         public void Add()
         {
-			IList<T> _listobj;
+			ArrayX<T> _listobj;
             _listobj = List.Evaluate();
             if (_listobj != null)
             {
-                _listobj.Clear();
-                this.Cleared.Trigger();
+				index.Value = _listobj.XAdd(AddedValue.Evaluate());
+                this.Added.Trigger();
             }
         }
 
@@ -43,7 +47,7 @@ namespace CollectionsX.Array
 			}
 			if (connectingTypes.inputs.TryGetValue("List", out var type))
 			{
-				return typeof(ArrayClear<>).MakeGenericType(type.GetGenericArguments()[0]);
+				return typeof(ArrayAdd<>).MakeGenericType(type.GetGenericArguments()[0]);
 			}
 			return null;
 		}

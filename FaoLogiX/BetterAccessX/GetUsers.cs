@@ -46,7 +46,7 @@ namespace FaoLogiX.BetterAccessX
 			World.GetUsers(t);
 			foreach (var item in t)
             {
-				Value.Add(item);
+				Value.XAdd(item);
             }
 			Loaded.Trigger();
 		}

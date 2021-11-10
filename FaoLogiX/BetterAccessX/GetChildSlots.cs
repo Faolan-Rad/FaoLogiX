@@ -50,7 +50,7 @@ namespace FaoLogiX.BetterAccessX
 			Value.Clear();
 			foreach (var item in slot.Evaluate().Children)
             {
-				Value.Add(item);
+				Value.XAdd(item);
             }
 			Loaded.Trigger();
 		}

@@ -14,7 +14,7 @@ namespace CollectionsX.Array
 	[Category(new string[] { "LogiX/Collections/Array" })]
 	public class ArrayInsert<T> : LogixNode, IChangeable, IWorldElement
 	{
-        public readonly Input<ArrayX<T>> List;
+        public readonly Input<IList<T>> List;
 
 		public readonly Input<int> Index;
 
@@ -46,13 +46,13 @@ namespace CollectionsX.Array
 		[ImpulseTarget]
 		public void Add()
 		{
-			ArrayX<T> _listobj;
+			IList<T> _listobj;
             _listobj = List.Evaluate();
             if (_listobj != null)
             {
 				try
 				{
-					_listobj.Insert(Value.Evaluate(), Index.EvaluateRaw());
+					_listobj.Insert(Index.EvaluateRaw(), Value.Evaluate());
 					this.Set.Trigger();
 				}
 				catch 

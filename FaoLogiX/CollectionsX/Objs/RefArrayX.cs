@@ -8,6 +8,7 @@ using BaseX;
 using FrooxEngine.UIX;
 using CollectionsX.Objs;
 using CollectionsX.Delegates;
+using System.Collections;
 
 namespace CollectionsX.Objs
 {
@@ -49,6 +50,8 @@ namespace CollectionsX.Objs
         }
         public int Count { get { return Array.Count; } }
 
+        public bool IsReadOnly => throw new NotImplementedException();
+
         public T this[int index]
         {
             get
@@ -85,7 +88,7 @@ namespace CollectionsX.Objs
             });
         }
 
-        public int Add(T value = default(T))
+        public int XAdd(T value = default(T))
         {
             Append(value);
             return Count - 1;
@@ -125,7 +128,7 @@ namespace CollectionsX.Objs
             });
         }
 
-        public void Insert(T value, int index)
+        public void Insert(int index, T value)
         {
             base.World.RunSynchronously(delegate
             {
@@ -208,6 +211,49 @@ namespace CollectionsX.Objs
             ui.NestOut();
             obj.Setup(this, addButton);
             ui.PopStyle();
+        }
+
+
+        void ICollection<T>.Add(T item)
+        {
+            XAdd(item);
+        }
+
+        public bool Contains(T item)
+        {
+            return IndexOf(item) != -1;
+        }
+
+        public void CopyTo(T[] array, int arrayIndex)
+        {
+            List<T> data = new List<T>();
+            for (int i = arrayIndex; i < Count; i++)
+            {
+                data.Add(this[i]);
+            }
+            data.CopyTo(array);
+        }
+
+        public bool Remove(T item)
+        {
+            var index = IndexOf(item);
+            if (index < 0)
+            {
+                return false;
+            }
+            else
+            {
+                Remove(index, 1);
+                return true;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                yield return this[i];
+            }
         }
     }
 

@@ -7,33 +7,23 @@ using FrooxEngine;
 using CollectionsX.Delegates;
 namespace CollectionsX.Objs
 {
-    public interface ArrayX<T>: IEquatable<ArrayX<T>>, ICustomInspector
+    public interface ArrayX<T>: IList<T>, ICustomInspector
     {
-        int Count { get; }
-        void Append(T value = default(T));
-        int Add(T value = default(T));
-
         event ArrayXDataChange<T> DataWritten;
 
         event ArrayXLengthChange<T> DataShortened;
 
         event ArrayXDataChange<T> DataInsert;
 
-        void Clear();
-
         void AppendArray(ArrayX<T> source);
 
-        IEnumerator<T> GetEnumerator();
         void Copy(ArrayX<T> source);
         string ToString();
         ICollectionsObj<T> GetObj(int index);
-        T this[int index] { get;  }
-
-        void RemoveAt(int index);
+        
         void Remove(int index, int count);
 
-        void Write(T value, int index);
-        void Insert(T value, int index);
-        int IndexOf(T value);
+        int XAdd(T data);
+
     }
 }

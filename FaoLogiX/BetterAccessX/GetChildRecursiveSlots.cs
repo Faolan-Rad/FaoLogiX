@@ -51,7 +51,7 @@ namespace FaoLogiX.BetterAccessX
 			List<Slot> t = slot.Evaluate().GetAllChildren();
 			foreach (var item in t)
             {
-				Value.Add(item);
+				Value.XAdd(item);
             }
 			Loaded.Trigger();
 		}

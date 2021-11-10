@@ -17,7 +17,7 @@ namespace CollectionsX.Array
 
 		public readonly Output<T> Value;
 
-		public readonly Input<ArrayX<T>> List;
+		public readonly Input<IList<T>> List;
 
 		public readonly Impulse LoopStart;
 
@@ -33,7 +33,7 @@ namespace CollectionsX.Array
                 return;
             }
 			this.LoopStart.Trigger();
-            ArrayX<T> _listobj;
+			IList<T> _listobj;
 			int count;
             _listobj = List.Evaluate();
             if (_listobj != null)

@@ -51,7 +51,7 @@ namespace FaoLogiX.BetterAccessX
 			Value.Clear();
 			foreach (var item in slot.Evaluate().Components)
             {
-				if(typeof(T).IsAssignableFrom(item.GetType())) Value.Add((T)item);
+				if(typeof(T).IsAssignableFrom(item.GetType())) Value.XAdd((T)item);
             }
 			Loaded.Trigger();
 		}
